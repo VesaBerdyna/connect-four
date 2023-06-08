@@ -54,5 +54,15 @@ drawPiece i x y
 drawPieces :: [[Int]] -> Picture
 drawPieces b = pictures [drawPiece (b !! x !! y) x y |
                           x <- [0..6], y <- [0..5]]
+                          
+-- |End screen
+drawEnd :: Picture
+drawEnd = translate (-107) (-55) $ color white $ text "End"
+
+-- |Draw the entire board
+drawBoard :: [[Int]] -> Picture
+drawBoard b
+  | isFinished b = pictures [drawPlatter, drawPieces b, drawEnd]
+  | otherwise    = pictures [drawPlatter, drawPieces b]
 
 
