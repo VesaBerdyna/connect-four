@@ -65,4 +65,18 @@ drawBoard b
   | isFinished b = pictures [drawPlatter, drawPieces b, drawEnd]
   | otherwise    = pictures [drawPlatter, drawPieces b]
 
+------ GAME ------
 
+-- |Generate an empty new board, 0 = None, 1 = Player 1, 2 = Player 2
+newBoard :: [[Int]]
+newBoard = aux 7 -- 7 Columns
+  where
+    aux 0 = []
+    aux n = [0,0,0,0,0,0] : aux (n-1) -- 6 rows
+
+
+-- |A function that does this (in python): xs[n] = e
+replace :: Int -> a -> [a] -> [a]
+replace 0 e (_:xs) = e : xs
+replace n e (x:xs) = x : replace (n-1) e xs
+replace n e []     = []
