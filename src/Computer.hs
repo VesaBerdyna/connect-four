@@ -23,3 +23,14 @@ diag1Streak n i = verticalStreak n i . diagonals
 
 diag2Streak :: Int -> Int -> [[Int]] -> Int
 diag2Streak n i = verticalStreak n i . diagonals . reverse
+
+streaks :: Int -> Int -> [[Int]] -> Int
+streaks n i b = verticalStreak n i b +
+                horizontalStreak n i b +
+                diag1Streak n i b +
+                diag2Streak n i b
+
+-- |Evaluation function for player 2 (bot)
+eval :: [[Int]] -> Int
+eval b = 100 * streaks 4 2 b + 5 * streaks 3 2 b + 2 * streaks 2 2 b
+       - 1000 * streaks 4 1 b - 5 * streaks 3 1 b - 2 * streaks 2 1 b
