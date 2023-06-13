@@ -80,3 +80,18 @@ replace :: Int -> a -> [a] -> [a]
 replace 0 e (_:xs) = e : xs
 replace n e (x:xs) = x : replace (n-1) e xs
 replace n e []     = []
+
+-- |Place as player i at coordinates x y in board l
+-- <=> l[x][y] = i
+placeCoord :: Int -> Int -> Int -> [[Int]] -> [[Int]]
+placeCoord i 0 y (l:ls) = replace y i l : ls
+placeCoord i x y (l:ls) = l : placeCoord i (x-1) y ls
+placeCoord i x y []     = []
+
+
+-- |Add i at the bottum of a column (first "0" encoutered)
+addInColumn :: Int -> [Int] -> [Int]
+addInColumn i [] = [] -- <- Convention (should never happen in our game)
+addInColumn i (x:xs)
+  | x == 0 = i:xs
+  | otherwise = x : addInColumn i xs
