@@ -34,3 +34,15 @@ streaks n i b = verticalStreak n i b +
 eval :: [[Int]] -> Int
 eval b = 100 * streaks 4 2 b + 5 * streaks 3 2 b + 2 * streaks 2 2 b
        - 1000 * streaks 4 1 b - 5 * streaks 3 1 b - 2 * streaks 2 1 b
+
+-- |Tree data type
+data Tree a = Node a [Tree a]
+  deriving Show
+
+
+-- |Generate tree of player i moves out of board b with depth d
+genTree :: Int -> Int -> [[Int]] -> Tree [[Int]]
+genTree i 0 b = Node b []
+genTree i d b = Node b [aux x | x <- [0..6], not $ isLineFull (b !! x)]
+  where
+    aux a = genTree (if i == 1 then 2 else 1) (d-1) $ place i a b
