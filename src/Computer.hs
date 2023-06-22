@@ -46,3 +46,19 @@ genTree i 0 b = Node b []
 genTree i d b = Node b [aux x | x <- [0..6], not $ isLineFull (b !! x)]
   where
     aux a = genTree (if i == 1 then 2 else 1) (d-1) $ place i a b
+
+-- |Get Value of a Node
+getVal :: Tree a -> a
+getVal (Node a _) = a
+
+-- |Get nodes below
+getSubNodes :: Tree a -> [Tree a]
+getSubNodes (Node _ a) = a
+
+-- |Find maximum of tree of ints
+maxTree :: [Tree Int] -> Int
+maxTree = foldl (\acc x -> max acc $ getVal x) (-1000)
+
+-- |Find minimum of tree of ints
+minTree :: [Tree Int] -> Int
+minTree = foldl (\acc x -> min acc $ getVal x) 1000
