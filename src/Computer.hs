@@ -2,6 +2,21 @@ module Computer (playComputer) where
 
 import Board
 
+
+-- |Play with and depth d and board b
+computerPlayer :: Int -> [[Int]] -> [[Int]]
+computerPlayer depth board
+  | count1s board == 1 = place 2 3 board -- Heuristic
+  | otherwise      = pos
+    where
+      mt = genTree 2 depth board -- Move tree
+      ct = genCoef 2 mt -- Coef tree
+      ts = getSubNodes mt -- Moves allowed now
+      tsc = getSubNodes ct -- Coef of moves allowed now
+      mct = maxTree tsc -- Max coef
+      pos = head [getVal (ts !! x) | x <- [0..length ts],
+                  getVal (tsc !! x) == mct]
+                  
 -- |Count streaks of n consecutive piece of player i, k is the counter,
 -- p previous elem
 lineStreak :: Int -> Int -> Int -> Int -> [Int] -> Int
