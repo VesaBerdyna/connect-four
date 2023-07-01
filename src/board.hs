@@ -95,3 +95,22 @@ addInColumn i [] = [] -- <- Convention (should never happen in our game)
 addInColumn i (x:xs)
   | x == 0 = i:xs
   | otherwise = x : addInColumn i xs
+
+-- |Place as player i at column c.
+place :: Int -> Int -> [[Int]] -> [[Int]]
+place _ _ [] = [] -- <- Convention
+place i 0 (x:xs)
+  | isLineFull x = x:xs
+  | otherwise = addInColumn i x : xs
+place i c (x:xs) = x : place i (c-1) xs
+
+-- |Check a line is full
+isLineFull :: [Int] -> Bool
+isLineFull [] = True
+isLineFull (x:xs)
+  | x == 0    = False
+  | otherwise =  isLineFull xs
+
+-- |Check if the board is full
+isBoardFull :: [[Int]] -> Bool
+isBoardFull = foldr ((&&) . isLineFull) True
