@@ -1,3 +1,3 @@
-# Changelog for CN4
+# Changelog for haskell-connect4
 
 ## Unreleased changes

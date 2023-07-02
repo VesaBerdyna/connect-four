@@ -3,13 +3,13 @@ module Player where
 import System.Random
 
 import AI (GamePosition, negmax)
-import Util (randomPick)
+import Common (randomPick)
 
 type Player a b = [a] -> b -> Maybe a -> IO a
 
-ioplayer :: GamePosition b => Player a b
-ioplayer moves b (Just c) = return c
-ioplayer moves b Nothing = error "i need an IO entry to work"
+humanPlayer :: GamePosition b => Player a b
+humanPlayer moves b (Just c) = return c
+humanPlayer moves b Nothing = error "i need an IO entry to work"
 
 randplayer :: Player a b
 randplayer moves _ _ = getStdRandom (randomPick moves)
